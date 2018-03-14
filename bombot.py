@@ -2,6 +2,7 @@
 
 import lazybot as bot
 import bom_aurora as bom
+import json
 
 with open('bombot.json') as f:
 	config = json.load(f)
@@ -56,6 +57,9 @@ def sendalerts(alerttext):
 
 def location(message):
 	city = message['text']
+
+	#Remove @usernames - they confuse the BOM api.
+	city = ' '.join([i for i in city.split() if not i.startswith('@')])
 	
 	tosend = {
 	'chat_id': message['chat']['id'],
